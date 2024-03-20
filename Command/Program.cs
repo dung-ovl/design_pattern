@@ -1,10 +1,6 @@
 ﻿namespace Command
 {
-    public struct Vec2
-    {
-        public int x;
-        public int y;
-    }
+
     public interface ICommand
     {
         void Execute();
@@ -12,11 +8,12 @@
     }
     public class PlayerMover
     {
-        public Vec2 position;
-        public void Move(Vec2 direction)
+        public int positionX;
+        public int positionY;
+        public void Move(int x, int y)
         {
-            position.x += direction.x;
-            position.y += direction.y;
+            positionX += x;
+            positionY += y;
         }
 
     }
@@ -36,12 +33,12 @@
 
         public void Execute()
         {
-            _playerMover.Move(new Vec2 { x = _x, y = _y });
+            _playerMover.Move(_x, _y);
         }
 
         public void Undo()
         {
-            _playerMover.Move(new Vec2 { x = -_x, y = -_y });
+            _playerMover.Move(-_x, -_y);
         }
     }
 
@@ -111,7 +108,7 @@
                 Console.Write("Enter a command: ");
                 char input = Console.ReadKey().KeyChar;
                 inputHandler.HandleInput(input);
-                Console.WriteLine($" Player position: {playerMover.position.x}, {playerMover.position.y}");
+                Console.WriteLine($" Player position: {playerMover.positionX}, {playerMover.positionY}");
             }
 
         }
